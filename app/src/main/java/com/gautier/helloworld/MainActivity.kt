@@ -22,13 +22,13 @@ class MainActivity : AppCompatActivity() {
         initViews()
         addNames()
         firstLateButton.setOnClickListener {
-            namesText.text = getNames(1)
+            getNames(1)
         }
         lateFirstButton.setOnClickListener {
-            namesText.text = getNames(2)
+            getNames(2)
         }
         reverseButton.setOnClickListener {
-            namesText.text = getNames(3)
+            getNames(3)
         }
     }
 
@@ -36,49 +36,9 @@ class MainActivity : AppCompatActivity() {
         namesText.text = "Bonjour!"
     }
 
-    fun getNames(choice: Int): String {
-        val firstName = testCapitalize(firstNameEdit.text.toString())
-        val lastName = testCapitalize(lastNameEdit.text.toString())
-        lateinit var namesResult: String
-
-        when(choice) {
-            1 -> namesResult = firstLast(firstName, lastName)
-            2 -> namesResult = lastFirst(firstName, lastName)
-            3 -> namesResult = reverse(firstName, lastName)
-        }
-        return namesResult
-    }
-
-    private fun firstLast(firstName: String, lastName: String): String {
-        return "$firstName $lastName"
-    }
-
-    private fun lastFirst(firstName: String, lastName: String): String {
-        return "$lastName $firstName"
-    }
-
-    private fun reverse(firstName: String, lastName: String): String {
-        var fullName = "$firstName $lastName"
-        var reverseName = ""
-        for(i in 1..fullName.length) {
-            reverseName += fullName[fullName.length-i]
-        }
-        return reverseName
-    }
-
-    private fun testCapitalize(name: String): String {
-        var capitalizeName = ""
-        for(i in name.indices)
-            if(name[i].isUpperCase() && i != 0) {
-                capitalizeName += name[i].toLowerCase()
-            }
-            else if(i == 0) {
-                capitalizeName += name[0].toUpperCase()
-            }
-            else {
-                capitalizeName += name[i]
-            }
-        return capitalizeName
+    fun getNames(choice: Int) {
+        val stringManipulation = StringManipulation(firstNameEdit.text.toString(), lastNameEdit.text.toString(), choice)
+        namesText.text = stringManipulation.capitalizeNames()
     }
 
     fun initViews() {
